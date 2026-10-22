@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workshop Video Lesson"
+  short_description: "Narrated screen lessons with aligned subtitles"
+  default_prompt: "Use $workshop-video to create a self-contained video lesson with readable screen demos, narration, subtitles, chapters, and downloads."

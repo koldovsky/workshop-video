@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "owner": "REPLACE_WITH_YOUR_NAME",
+  "default_profile": "a",
+  "alternative_profiles": [
+    "b"
+  ],
+  "selection_date": "REPLACE_WITH_YYYY-MM-DD",
+  "selection": "Describe why this profile is the default and what the alternative is for.",
+  "auditioned_language": "REPLACE_WITH_LANGUAGE",
+  "source_recording": "REPLACE_WITH_SOURCE_DESCRIPTION",
+  "source_interval_seconds": [
+    0,
+    0
+  ],
+  "generation": {
+    "model": "FireRedTTS3-Base",
+    "seed": 0,
+    "stop_threshold": 0.5,
+    "do_tn": false,
+    "do_clean": false,
+    "do_split": false,
+    "attention": "sdpa",
+    "constructor": {
+      "use_fasttext": false,
+      "use_wetext": false,
+      "use_llm_tn": false
+    },
+    "validated_code_revision": "REPLACE_WITH_TESTED_COMMIT",
+    "validated_weights_revision": "REPLACE_WITH_TESTED_WEIGHTS_REVISION"
+  },
+  "reference_preparation": "24 kHz resampling by ffmpeg; arithmetic stereo mean; fixed gain to -24 dBFS RMS if needed. No EQ, denoise, compression, or time stretch.",
+  "profiles": {
+    "a": {
+      "voice": "firered-custom-a",
+      "role": "default",
+      "reference": "reference-a.wav",
+      "transcript": "reference-a.txt",
+      "reference_sha256": "REPLACE_WITH_SHA256_OF_reference-a.wav",
+      "transcript_sha256": "REPLACE_WITH_SHA256_OF_reference-a.txt",
+      "source_start_seconds": 0,
+      "source_end_seconds": 0,
+      "reference_duration_seconds": 0,
+      "generation": {
+        "inference_cfg": 2.0,
+        "n_timesteps": 10
+      }
+    },
+    "b": {
+      "voice": "firered-custom-b",
+      "role": "alternative",
+      "reference": "reference-b.wav",
+      "transcript": "reference-b.txt",
+      "reference_sha256": "REPLACE_WITH_SHA256_OF_reference-b.wav",
+      "transcript_sha256": "REPLACE_WITH_SHA256_OF_reference-b.txt",
+      "source_start_seconds": 0,
+      "source_end_seconds": 0,
+      "reference_duration_seconds": 0,
+      "generation": {
+        "inference_cfg": 2.0,
+        "n_timesteps": 20
+      }
+    }
+  }
+}

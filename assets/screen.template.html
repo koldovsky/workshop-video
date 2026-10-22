@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="__LANGUAGE__"><meta charset="utf-8"><title>Lesson screen</title>
+<style>
+*{box-sizing:border-box}body{margin:0;width:1600px;height:900px;background:#080d11;color:#e7eef2;font-family:"Segoe UI",sans-serif;overflow:hidden}header{height:106px;border-bottom:1px solid #28404b;padding:24px 66px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:19px;letter-spacing:3px;color:#52df9a}.chapter{font-size:23px;color:#b1c4ce;max-width:790px;text-align:right}main{padding:28px 66px 0;height:650px}h1{font-size:46px;line-height:1.15;letter-spacing:-1px;margin:0 0 16px;max-width:1430px}.label{font-size:18px;color:#57d5e2;margin:0 0 12px}.bullets{font-size:34px;line-height:1.43;max-width:1370px;margin:35px 0 0;padding-left:36px}.bullets li{padding-left:10px;margin:21px 0}.code{border:1px solid #29404b;background:#0b151c;border-radius:12px;overflow:hidden;padding:18px 24px;font:26px/1.37 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2;max-height:510px}.code.small{font-size:23px}.code-line{display:block;min-height:1.37em}.code-line.active{background:#193d35;color:#c5ffe0;border-left:4px solid #52df9a;margin-left:-12px;padding-left:8px}.line-number{display:inline-block;width:3.1em;color:#6d899a;user-select:none}.text-code{margin-top:24px;color:#c5e3f0}.exercise{border-left:5px solid #edbc72;padding-left:28px}.exercise .label{color:#edbc72}footer span{max-width:48%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}footer{position:absolute;left:66px;right:66px;bottom:115px;display:flex;justify-content:space-between;color:#829da9;font-size:18px}.subtitle-area{position:absolute;bottom:0;left:0;right:0;height:102px;background:#03080b;border-top:1px solid #1e333d}.progress{position:absolute;left:0;right:0;bottom:103px;height:3px;background:#1a2c36}.progress span{display:block;height:3px;background:#52df9a}#error{color:#ffaaaa;font-size:24px}
+</style>
+<header><div class="brand" id="brand"></div><div class="chapter" id="chapter"></div></header>
+<main id="main"><p class="label" id="label"></p><h1 id="title"></h1><div id="content"></div></main>
+<footer><span id="context"></span><span id="disclosure"></span></footer>
+<div class="progress"><span id="progress"></span></div><div class="subtitle-area"></div>
+<script id="screen-data" type="application/json">__SCREEN_DATA__</script>
+<script>
+const screens=JSON.parse(document.getElementById('screen-data').textContent);
+const index=Number(new URLSearchParams(location.search).get('screen')||0);
+const item=screens[index];
+if(!item)throw Error('Unknown screen');
+document.getElementById('chapter').textContent=item.chapterTitle;
+document.getElementById('brand').textContent=item.brand;
+document.getElementById('disclosure').textContent=item.disclosure;
+document.getElementById('title').textContent=item.title;
+document.getElementById('label').textContent=item.label;
+document.getElementById('context').textContent=item.context;
+document.getElementById('progress').style.width=(item.start/item.duration*100)+'%';
+const content=document.getElementById('content');
+if(item.kind==='exercise'||item.kind==='break')document.getElementById('main').classList.add('exercise');
+if(item.bullets){const ul=document.createElement('ul');ul.className='bullets';for(const value of item.bullets){const li=document.createElement('li');li.textContent=value;ul.append(li);}content.append(ul);}
+if(item.lines){const pre=document.createElement('div');pre.className='code'+(item.lines.length>13?' small':'')+(item.bullets?' text-code':'');for(const row of item.lines){const line=document.createElement('span');line.className='code-line'+(row.focus?' active':'');if(row.number!==null){const number=document.createElement('span');number.className='line-number';number.textContent=String(row.number);line.append(number);}line.append(document.createTextNode(row.text));pre.append(line);}content.append(pre);}
+// Keep every line on screen while retaining a readable minimum font size.
+const code=content.querySelector('.code'),bullets=content.querySelector('.bullets');
+const fits=()=>content.getBoundingClientRect().bottom<=748&&(!code||code.scrollHeight<=code.clientHeight+2);
+for(const [element,minimum] of [[document.getElementById('title'),40],[code,21],[bullets,28]]){
+  if(!element)continue;
+  let size=parseFloat(getComputedStyle(element).fontSize);
+  while(!fits()&&size>minimum){size-=1;element.style.fontSize=size+'px';}
+}
+document.documentElement.dataset.ready='true';
+</script></html>

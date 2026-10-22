@@ -1,0 +1,21 @@
+{
+  "title": "Reading a small CSV file",
+  "language": "en",
+  "durationSeconds": 30,
+  "voice": "en-US-AvaNeural",
+  "rate": "+0%",
+  "brand": "DATA WORKSHOP",
+  "description": "A short explanation of headers and rows in a CSV file.",
+  "disclosure": "Synthetic narration; prepared teaching examples. Includes reading pauses.",
+  "links": [{"label": "Workshop home", "href": "index.html"}],
+  "chapters": [
+    {"id": "headers", "title": "Headers describe columns", "targetSeconds": 15,
+     "segments": [{"id": "first-row", "title": "Start with the header",
+       "narration": "The first row names the columns. Here, each later row contains a person's name and the city where they live.",
+       "screen": {"kind": "code", "heading": "A header followed by two records", "code": "name,city\nAda,London\nGrace,New York", "focusLines": [1]}}]},
+    {"id": "practice", "title": "Read a record", "targetSeconds": 15,
+     "segments": [{"id": "identify", "title": "Find the matching value",
+       "narration": "Find the city associated with Grace. Read across the row, keeping each value under its column heading. Pause the lesson if you need more time.",
+       "screen": {"kind": "exercise", "heading": "Which city is listed for Grace?", "bullets": ["Find Grace in the name column.", "Read the city in the same row.", "The answer is New York."]}}]}
+  ]
+}
